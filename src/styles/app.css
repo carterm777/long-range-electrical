@@ -1,0 +1,325 @@
+/* ── Page-level composition primitives ──────────────────────────────────────
+   Only the things genuinely shared across sections live here: the page's
+   tonal bands, the eyebrow, the button set, the section-head block and the
+   glass surface primitive. Everything else is namespaced beside its own
+   component. Nothing here re-declares .section padding.
+   ───────────────────────────────────────────────────────────────────────── */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  font-weight: var(--w-regular);
+  line-height: var(--lh-body);
+  color: var(--text-body);
+  background: var(--surface-0);
+}
+
+::selection { background: rgb(var(--rgb-primary) / 0.28); color: var(--text-strong); }
+
+.skip-link {
+  background: var(--ink-900);
+  color: var(--text-on-dark);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-caption);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-caps);
+  text-transform: uppercase;
+  box-shadow: var(--e-3);
+}
+
+/* ── Tonal bands ───────────────────────────────────────────────────────── */
+.band-light  { background: var(--surface-0); color: var(--text-body); }
+.band-tint   { background: var(--surface-1); color: var(--text-body); }
+.band-tint-2 { background: var(--surface-2); color: var(--text-body); }
+.band-dark {
+  background: var(--ink-900);
+  color: var(--text-on-dark);
+  isolation: isolate;
+}
+.band-dark :where(h2, h3) { color: var(--text-on-dark); }
+
+/* ── Eyebrow ───────────────────────────────────────────────────────────── */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-caps-wide);
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--brand-secondary);
+}
+.eyebrow::before {
+  content: '';
+  width: 26px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--brand-primary), rgb(var(--rgb-primary) / 0));
+  border-radius: var(--r-pill);
+  flex: none;
+}
+.eyebrow--on-dark { color: var(--brand-accent); }
+
+/* ── Section head ──────────────────────────────────────────────────────── */
+.sec-head { max-width: 46rem; }
+.sec-head > * + * { margin-top: var(--sp-4); }
+.sec-head h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: var(--w-black);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tr-tight);
+  color: var(--text-strong);
+  text-wrap: balance;
+}
+.sec-head p {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-loose);
+  color: var(--text-muted);
+  max-width: 40rem;
+}
+.sec-head--on-dark h2 { color: var(--text-on-dark); }
+.sec-head--on-dark p  { color: var(--text-on-dark-muted); }
+.sec-head--center { margin-inline: auto; text-align: center; }
+.sec-head--center p { margin-inline: auto; }
+.sec-head--center .eyebrow::after {
+  content: '';
+  width: 26px;
+  height: 2px;
+  background: linear-gradient(270deg, var(--brand-primary), rgb(var(--rgb-primary) / 0));
+  border-radius: var(--r-pill);
+  flex: none;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tr-snug);
+  color: var(--text-strong);
+}
+
+/* ── Glass primitive ───────────────────────────────────────────────────── */
+.glass {
+  position: relative;
+  background: var(--glass-light);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  border: 1px solid rgb(var(--rgb-light) / 0.9);
+  box-shadow: var(--e-2), var(--e-inset-top);
+  border-radius: var(--r-lg);
+}
+.glass--dark {
+  background: var(--glass-dark);
+  border-color: var(--line-dark);
+  box-shadow: var(--e-3), var(--e-inset-top-dark);
+  color: var(--text-on-dark);
+}
+
+/* ── Buttons ───────────────────────────────────────────────────────────── */
+.btn {
+  --btn-pad-y: 0.875rem;
+  --btn-pad-x: 1.5rem;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  border-radius: var(--r-pill);
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-caps);
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  transition:
+    transform var(--hover-dur) var(--ease-out-cubic),
+    box-shadow var(--hover-dur) var(--ease-out-cubic),
+    background-color var(--hover-dur) var(--ease-out-cubic),
+    border-color var(--hover-dur) var(--ease-out-cubic),
+    color var(--hover-dur) var(--ease-out-cubic);
+}
+.btn .lucide { --icon: 18px; }
+
+.btn--primary {
+  background: linear-gradient(140deg, var(--brand-primary), var(--brand-secondary) 118%);
+  color: var(--brand-light);
+  box-shadow:
+    0 1px 0 rgb(var(--rgb-light) / 0.35) inset,
+    0 14px 32px -14px rgb(var(--rgb-primary) / 0.85),
+    0 2px 10px -4px rgb(var(--rgb-secondary) / 0.5);
+}
+.btn--primary:hover {
+  transform: translate3d(var(--mag-x, 0px), calc(-2px + var(--mag-y, 0px)), 0);
+  box-shadow:
+    0 1px 0 rgb(var(--rgb-light) / 0.45) inset,
+    0 20px 44px -14px rgb(var(--rgb-primary) / 0.95),
+    0 3px 14px -4px rgb(var(--rgb-secondary) / 0.55);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-strong);
+  border: 1px solid var(--line-light);
+}
+.btn--ghost:hover {
+  border-color: rgb(var(--rgb-primary) / 0.55);
+  color: var(--brand-secondary);
+  background: rgb(var(--rgb-primary) / 0.06);
+}
+
+.btn--ghost-dark {
+  background: var(--glass-dark);
+  -webkit-backdrop-filter: blur(var(--glass-blur-soft));
+  backdrop-filter: blur(var(--glass-blur-soft));
+  color: var(--text-on-dark);
+  border: 1px solid var(--line-dark);
+}
+.btn--ghost-dark:hover {
+  background: var(--glass-dark-strong);
+  border-color: rgb(var(--rgb-primary) / 0.6);
+  color: var(--brand-light);
+}
+
+.btn--sm { --btn-pad-y: 0.6875rem; --btn-pad-x: 1.125rem; font-size: var(--fs-micro); }
+.btn--block { width: 100%; }
+
+/* Text-link action, used where a full button would be a third same-weight ask */
+.linkline {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-snug);
+  color: var(--brand-secondary);
+}
+.linkline .lucide { --icon: 16px; transition: transform var(--t-mid) var(--ease-out-quart); }
+.linkline:hover .lucide { transform: translateX(4px); }
+.linkline--on-dark { color: var(--brand-accent); }
+
+/* Underline Sweep — shared link micro-interaction */
+.sweep { position: relative; display: inline-block; padding-bottom: 2px; }
+.sweep::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 240ms var(--ease-out-quart);
+}
+.sweep:hover::after, .sweep:focus-visible::after { transform: scaleX(1); }
+
+/* ── Reassurance microcopy ─────────────────────────────────────────────── */
+.reassure {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  font-size: var(--fs-caption);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.reassure .lucide { --icon: 14px; margin-top: 2px; color: var(--brand-primary); }
+.reassure--on-dark { color: var(--text-on-dark-faint); }
+
+/* ── Placeholder flag — this is a demo, and it says so plainly ─────────── */
+.placeholder-note {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--r-md);
+  border: 1px dashed var(--line-light);
+  background: rgb(var(--rgb-primary) / 0.05);
+  font-size: var(--fs-micro);
+  font-weight: var(--w-semi);
+  letter-spacing: var(--tr-caps);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  line-height: 1.4;
+  text-align: left;
+}
+.placeholder-note { align-items: flex-start; }
+.placeholder-note .lucide { --icon: 13px; margin-top: 2px; }
+.placeholder-note--on-dark {
+  border-color: var(--line-dark);
+  background: rgb(var(--rgb-light) / 0.04);
+  color: var(--text-on-dark-faint);
+}
+
+/* ── The conduit rail — this page's structural motif ───────────────────── */
+.rail { position: absolute; pointer-events: none; overflow: visible; }
+.rail path, .rail line { fill: none; stroke-linecap: round; }
+
+/* Live Current — a node travelling the drawn trace. Site-specific technique. */
+@keyframes lre-current {
+  0%   { offset-distance: 0%;   opacity: 0; }
+  10%  { opacity: 1; }
+  86%  { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+.lre-current {
+  offset-rotate: 0deg;
+  animation: lre-current var(--current-dur, 7s) cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  animation-delay: var(--current-delay, 1.4s);
+}
+
+/* ── Hairline grid used behind glass in several bands ──────────────────── */
+.gridwash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--gw-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--gw-line) 1px, transparent 1px);
+  background-size: var(--gw-size, 72px) var(--gw-size, 72px);
+  -webkit-mask-image: radial-gradient(120% 90% at var(--gw-x, 50%) var(--gw-y, 0%), var(--mask-solid) 0%, transparent 72%);
+  mask-image: radial-gradient(120% 90% at var(--gw-x, 50%) var(--gw-y, 0%), var(--mask-solid) 0%, transparent 72%);
+}
+
+/* ── Reveal rest state ─────────────────────────────────────────────────────
+   motion.css resolves EVERY finished entrance to clip-path: inset(0 0 0 0).
+   Only the clip and wipe techniques actually need a clip-path at rest; on the
+   others it silently clips the element to its own border box, which throws
+   away every coloured shadow and every deliberate overhang on this page (the
+   timeline markers, the offset photo in the story stack, the card elevations).
+   Same specificity as the kit rule, declared after it, so it wins on order.
+   ───────────────────────────────────────────────────────────────────────── */
+[data-in=true][data-reveal=rise],
+[data-in=true][data-reveal=settle],
+[data-in=true][data-reveal=fade],
+[data-in=true][data-reveal=focus],
+[data-in=true][data-reveal=draw],
+[data-in=true][data-reveal=draw-y],
+[data-in=true][data-reveal=stroke],
+[data-in=true] [data-reveal=rise],
+[data-in=true] [data-reveal=settle],
+[data-in=true] [data-reveal=fade],
+[data-in=true] [data-reveal=focus],
+[data-in=true] [data-reveal=draw],
+[data-in=true] [data-reveal=draw-y],
+[data-in=true] [data-reveal=stroke] { clip-path: none; }
+
+/* And release the compositing hint once an entrance has finished. A layer that
+   stays promoted for the life of the page costs memory and, on a page this
+   tall, can lose its own raster. */
+[data-in=true][data-reveal],
+[data-in=true] [data-reveal] { will-change: auto; }
+
+/* ── Focus visibility floor for this brand ─────────────────────────────── */
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 3px;
+}
+.band-dark :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline-color: var(--brand-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lre-current { animation: none; offset-distance: 100%; opacity: 0.7; }
+}

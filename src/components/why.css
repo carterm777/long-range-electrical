@@ -1,0 +1,156 @@
+/* ── Why Us — Icon + Blurb Grid / Soft Card Elevation ─────────────────────
+   Elevation sweep: the first pass put the four blurbs in a plain 2x2 under a
+   full-width section head, which is the shape Reviews and Services already
+   use and read as the template answer. Recomposed as a 3x2 editorial grid
+   where the section head occupies the first cell and the sixth cell is a
+   photograph — Background Pattern Behind Foreground Photo, from the richness
+   file, with the hairline conduit grid as the pattern.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.why { overflow: clip; }
+.why-orb {
+  position: absolute;
+  right: -12%;
+  top: -18%;
+  width: 46rem;
+  height: 46rem;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgb(var(--rgb-primary) / 0.13), transparent 62%);
+  filter: blur(20px);
+}
+.why-grid {
+  --gw-line: rgb(var(--rgb-ink) / 0.05);
+  --gw-size: 58px;
+  --gw-x: 18%;
+  --gw-y: 50%;
+}
+
+.why-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-5);
+}
+
+.why-head {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: var(--sp-4);
+}
+.why-head > * + * { margin-top: var(--sp-4); }
+
+/* ── Cards ─────────────────────────────────────────────────────────────── */
+.why-card {
+  position: relative;
+  padding: var(--sp-6);
+  border-radius: var(--r-lg);
+  background: var(--surface-0);
+  border: 1px solid var(--line-light-soft);
+  box-shadow: var(--e-2);
+  transition:
+    transform var(--hover-dur) var(--ease-out-cubic),
+    box-shadow var(--hover-dur) var(--ease-out-cubic),
+    border-color var(--hover-dur) var(--ease-out-cubic);
+}
+.why-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(160deg, rgb(var(--rgb-primary) / 0.06), transparent 48%);
+  opacity: 0;
+  transition: opacity var(--hover-dur) var(--ease-out-cubic);
+}
+.why-card:hover {
+  transform: translateY(-6px) rotate(-0.35deg);
+  box-shadow: var(--e-4);
+  border-color: rgb(var(--rgb-primary) / 0.28);
+}
+.why-card:hover::before { opacity: 1; }
+
+.why-card-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-md);
+  color: var(--brand-light);
+  background: linear-gradient(150deg, var(--brand-primary), var(--brand-secondary));
+  box-shadow:
+    inset 0 1px 0 rgb(var(--rgb-light) / 0.4),
+    0 14px 26px -14px rgb(var(--rgb-primary) / 0.85);
+}
+.why-card-icon .lucide { --icon: 22px; }
+
+.why-card-title { margin-top: var(--sp-5); }
+.why-rule {
+  display: block;
+  width: 42px;
+  height: 2px;
+  margin-top: var(--sp-3);
+  border-radius: var(--r-pill);
+  background: linear-gradient(90deg, var(--brand-primary), rgb(var(--rgb-primary) / 0.15));
+}
+.why-card-body {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-loose);
+  color: var(--text-muted);
+}
+
+/* ── Photo cell ────────────────────────────────────────────────────────── */
+.why-photo {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-3);
+  min-height: 14rem;
+}
+.why-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 46%;
+  transition: transform 900ms var(--ease-out-quart);
+}
+.why-photo:hover img { transform: scale(1.045); }
+.why-photo-veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(var(--rgb-ink) / 0.05) 40%, rgb(var(--rgb-ink) / 0.82));
+}
+.why-photo-caption {
+  position: absolute;
+  left: var(--sp-5);
+  right: var(--sp-5);
+  bottom: var(--sp-5);
+  font-family: var(--font-display);
+  font-size: var(--fs-caption);
+  font-weight: var(--w-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: var(--brand-light);
+}
+
+/* ── Breakpoints ───────────────────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .why-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .why-head { grid-column: 1 / -1; padding-right: 0; margin-bottom: var(--sp-2); }
+  .why-photo { grid-column: 1 / -1; min-height: 16rem; }
+}
+@media (max-width: 700px) {
+  .why-inner { grid-template-columns: minmax(0, 1fr); gap: var(--sp-4); }
+  .why-card { padding: var(--sp-5); }
+  .why-photo { min-height: 13rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .why-card:hover { transform: none; }
+  .why-photo:hover img { transform: none; }
+}

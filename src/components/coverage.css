@@ -1,0 +1,179 @@
+/* ── Coverage — Coverage Zone Grid / Glass Overlay Card ───────────────────
+   The assigned visual style is "Glass Overlay Address Card on Map". There is
+   no confirmed address or city on the source site, so the map is replaced by
+   a wide Alberta environmental photograph with a drawn graticule — the glass
+   card still floats over it, but nothing geographic is fabricated.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.cov {
+  overflow: clip;
+  background: var(--ink-950);
+}
+.cov-bed {
+  position: absolute;
+  inset: -8% -4%;
+  z-index: 0;
+  transform: translate3d(var(--dx, 0px), var(--dy, 0px), 0);
+}
+.cov-bed img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+}
+.cov-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(96deg, rgb(var(--rgb-ink) / 0.95) 0%, rgb(var(--rgb-ink) / 0.82) 46%, rgb(var(--rgb-ink) / 0.6) 100%),
+    linear-gradient(to bottom, rgb(var(--rgb-ink) / 0.7), transparent 30%, rgb(var(--rgb-ink) / 0.8));
+}
+.cov-grid {
+  z-index: 0;
+  --gw-line: rgb(var(--rgb-light) / 0.06);
+  --gw-size: 72px;
+  --gw-x: 70%;
+  --gw-y: 40%;
+}
+.cov-trace {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  color: rgb(var(--rgb-accent) / 0.3);
+  pointer-events: none;
+}
+.cov-trace .lre-current { color: var(--brand-accent); filter: drop-shadow(0 0 5px currentColor); }
+
+.cov-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  align-items: center;
+  gap: clamp(1.75rem, 3vw, 3.5rem);
+}
+
+/* ── Glass card ────────────────────────────────────────────────────────── */
+.cov-card {
+  padding: var(--sp-8);
+  border-radius: var(--r-xl);
+  background: rgb(var(--rgb-light) / 0.07);
+  -webkit-backdrop-filter: blur(var(--glass-blur-heavy)) saturate(160%);
+  backdrop-filter: blur(var(--glass-blur-heavy)) saturate(160%);
+  border: 1px solid rgb(var(--rgb-light) / 0.16);
+  box-shadow: 0 48px 90px -46px rgb(var(--rgb-ink) / 0.95), var(--e-inset-top-dark);
+}
+.cov-h2 {
+  margin-top: var(--sp-5);
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: var(--w-black);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tr-tight);
+  color: var(--brand-light);
+}
+.cov-copy {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-loose);
+  color: var(--text-on-dark-muted);
+  max-width: 40ch;
+}
+.cov-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-4);
+  margin-top: var(--sp-6);
+}
+.cov-region {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-micro);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-caps);
+  text-transform: uppercase;
+  color: var(--text-on-dark-faint);
+}
+.cov-region .lucide { --icon: 14px; color: var(--brand-primary); }
+.cov-note { margin-top: var(--sp-6); }
+
+/* ── Zone grid ─────────────────────────────────────────────────────────── */
+.cov-zones {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-3);
+}
+.cov-zone {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-5);
+  border-radius: var(--r-md);
+  background: rgb(var(--rgb-ink) / 0.44);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  border: 1px solid rgb(var(--rgb-light) / 0.13);
+  transition:
+    border-color var(--hover-dur) var(--ease-out-cubic),
+    background-color var(--hover-dur) var(--ease-out-cubic),
+    transform var(--hover-dur) var(--ease-out-cubic);
+}
+.cov-zone:hover {
+  transform: translateY(-3px);
+  border-color: rgb(var(--rgb-primary) / 0.5);
+  background: rgb(var(--rgb-secondary) / 0.5);
+}
+.cov-zone-glow {
+  position: absolute;
+  inset: auto -30% -70% -30%;
+  height: 120%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(var(--rgb-primary) / 0.28), transparent 68%);
+  opacity: 0;
+  transition: opacity var(--hover-dur) var(--ease-out-cubic);
+  pointer-events: none;
+}
+.cov-zone:hover .cov-zone-glow { opacity: 1; }
+.cov-zone-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-xs);
+  color: var(--brand-accent);
+  background: rgb(var(--rgb-primary) / 0.13);
+  border: 1px solid rgb(var(--rgb-primary) / 0.24);
+}
+.cov-zone-icon .lucide { --icon: 18px; }
+.cov-zone-label {
+  position: relative;
+  font-size: var(--fs-caption);
+  font-weight: var(--w-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.35;
+  color: var(--text-on-dark);
+}
+
+@media (max-width: 1024px) {
+  .cov-inner { grid-template-columns: minmax(0, 1fr); gap: var(--sp-7); }
+  .cov-card { padding: var(--sp-6); }
+  .cov-copy { max-width: none; }
+}
+@media (max-width: 520px) {
+  .cov-zones { grid-template-columns: minmax(0, 1fr); gap: var(--sp-2); }
+  .cov-zone { flex-direction: row; align-items: center; padding: var(--sp-4); }
+  .cov-zone-icon { width: 32px; height: 32px; flex: none; }
+  .cov-zone-icon .lucide { --icon: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cov-zone:hover { transform: none; }
+}

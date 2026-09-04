@@ -1,0 +1,191 @@
+/* ── Long Range Electrical — design tokens ───────────────────────────────────
+   Every colour, type step, space step, radius, shadow and duration used
+   anywhere on this page is declared once here. Component CSS references the
+   variables and never a raw value.
+
+   The five brand colours and the single typeface are fixed by the brief. What
+   is designed here is the ratio between them: a deep navy ground derived from
+   the secondary royal blue carries the page's dark bands, the primary cyan is
+   spent almost entirely on light — glow, hairline, focus, the current running
+   through the conduit rail — and the accent tint only ever appears as light on
+   glass. #333333 stays what it is in the brief: body text.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Brand, fixed ──────────────────────────────────────────────────────── */
+  --brand-primary:   #13AFF0;
+  --brand-secondary: #003BB2;
+  --brand-accent:    #5CC9F5;
+  --brand-dark:      #333333;
+  --brand-light:     #FFFFFF;
+
+  /* Channel forms, so component CSS can build translucency without new hexes */
+  --rgb-primary:   19 175 240;
+  --rgb-secondary:  0  59 178;
+  --rgb-accent:    92 201 245;
+  --rgb-dark:      51  51  51;
+  --rgb-light:    255 255 255;
+  --rgb-ink:        4  16  41;
+  --rgb-surface-2:234 242 249;
+
+  /* Mask alpha carrier, not a page colour */
+  --mask-solid: #000;
+
+  /* ── Ground: shades of the secondary royal blue ────────────────────────── */
+  --ink-950: #030B1C;
+  --ink-900: #051029;
+  --ink-850: #071638;
+  --ink-800: #0A1D48;
+  --ink-700: #0E2A63;
+  --ink-600: #123680;
+
+  /* ── Light surfaces: cool tints, never warm ────────────────────────────── */
+  --surface-0: #FFFFFF;
+  --surface-1: #F5F9FC;
+  --surface-2: #EAF2F9;
+  --surface-3: #DCE9F4;
+
+  /* ── Text roles ────────────────────────────────────────────────────────── */
+  --text-strong:  #0A1B3A;
+  --text-body:    var(--brand-dark);
+  --text-muted:   #5C6572;
+  --text-faint:   #8A93A1;
+  --text-on-dark:        #EEF5FC;
+  --text-on-dark-muted:  #A9BEDA;
+  --text-on-dark-faint:  #7D93B4;
+
+  /* ── Hairlines & glass ─────────────────────────────────────────────────── */
+  --line-light:      rgb(var(--rgb-ink) / 0.10);
+  --line-light-soft: rgb(var(--rgb-ink) / 0.06);
+  --line-dark:       rgb(var(--rgb-light) / 0.14);
+  --line-dark-soft:  rgb(var(--rgb-light) / 0.07);
+  --line-cyan:       rgb(var(--rgb-primary) / 0.42);
+
+  --glass-dark:         rgb(var(--rgb-light) / 0.055);
+  --glass-dark-strong:  rgb(var(--rgb-light) / 0.095);
+  --glass-light:        rgb(var(--rgb-light) / 0.74);
+  --glass-light-strong: rgb(var(--rgb-light) / 0.90);
+  --glass-blur:         18px;
+  --glass-blur-soft:    10px;
+  --glass-blur-heavy:   28px;
+  --glass-sheen: linear-gradient(
+                   160deg,
+                   rgb(var(--rgb-light) / 0.20) 0%,
+                   rgb(var(--rgb-light) / 0.04) 34%,
+                   rgb(var(--rgb-light) / 0) 62%);
+
+  /* ── Type ──────────────────────────────────────────────────────────────── */
+  --font-display: 'Open Sans', 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+  --font-body:    'Open Sans', 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+
+  --w-regular: 400;
+  --w-semi:    600;
+  --w-bold:    700;
+  --w-black:   800;
+
+  /* A deliberately wide ramp — one family has to do two jobs, so the scale
+     carries the contrast the typeface cannot. */
+  --fs-micro:    0.688rem;
+  --fs-eyebrow:  0.75rem;
+  --fs-caption:  0.813rem;
+  --fs-sm:       0.938rem;
+  --fs-base:     1.0625rem;
+  --fs-lg:       clamp(1.0625rem, 0.4vw + 0.97rem, 1.1875rem);
+  --fs-xl:       clamp(1.125rem, 0.7vw + 0.97rem, 1.375rem);
+  --fs-h3:       clamp(1.0625rem, 0.5vw + 0.95rem, 1.3125rem);
+  --fs-h2-sm:    clamp(1.1875rem, 0.9vw + 0.99rem, 1.625rem);
+  --fs-h2:       clamp(1.6875rem, 2.1vw + 1.06rem, 2.875rem);
+  --fs-h1:       clamp(1.9375rem, 3.1vw + 1.02rem, 4.125rem);
+  --fs-numeral:  clamp(3rem, 4.4vw + 1.35rem, 5.75rem);
+  --fs-figure:   clamp(1.625rem, 1.6vw + 1.07rem, 2.5rem);
+
+  --lh-tight:   1.06;
+  --lh-snug:    1.16;
+  --lh-heading: 1.22;
+  --lh-body:    1.62;
+  --lh-loose:   1.72;
+
+  --tr-caps:      0.16em;
+  --tr-caps-wide: 0.22em;
+  --tr-tight:  -0.022em;
+  --tr-snug:   -0.012em;
+  --tr-normal: 0;
+
+  /* ── Space ─────────────────────────────────────────────────────────────── */
+  --sp-1:  0.25rem;
+  --sp-2:  0.5rem;
+  --sp-3:  0.75rem;
+  --sp-4:  1rem;
+  --sp-5:  1.25rem;
+  --sp-6:  1.5rem;
+  --sp-7:  2rem;
+  --sp-8:  2.5rem;
+  --sp-9:  3rem;
+  --sp-10: 4rem;
+  --sp-11: 5rem;
+  --sp-12: 6.5rem;
+
+  /* ── Section rhythm (consumed by base.css) ─────────────────────────────── */
+  --section-y:    clamp(3.5rem, 5.6vw, 7rem);
+  --gutter:       1.25rem;
+  --shell:        76rem;
+  --shell-narrow: 54rem;
+  --shell-wide:   85.5rem;
+
+  /* ── Radii ─────────────────────────────────────────────────────────────── */
+  --r-xs:   4px;
+  --r-sm:   8px;
+  --r-md:   14px;
+  --r-lg:   20px;
+  --r-xl:   28px;
+  --r-2xl:  36px;
+  --r-pill: 999px;
+
+  /* ── Elevation — coloured, never neutral black ─────────────────────────── */
+  --e-1: 0 1px 2px rgb(var(--rgb-ink) / 0.05),
+         0 6px 18px -10px rgb(var(--rgb-ink) / 0.16);
+  --e-2: 0 2px 4px rgb(var(--rgb-ink) / 0.05),
+         0 14px 34px -16px rgb(var(--rgb-secondary) / 0.24);
+  --e-3: 0 3px 8px rgb(var(--rgb-ink) / 0.06),
+         0 30px 62px -26px rgb(var(--rgb-secondary) / 0.34);
+  --e-4: 0 6px 14px rgb(var(--rgb-ink) / 0.08),
+         0 54px 96px -34px rgb(var(--rgb-secondary) / 0.44);
+  --e-glow: 0 0 0 1px rgb(var(--rgb-primary) / 0.30),
+            0 20px 60px -22px rgb(var(--rgb-primary) / 0.50);
+  --e-inset-top:      inset 0 1px 0 rgb(var(--rgb-light) / 0.55);
+  --e-inset-top-dark: inset 0 1px 0 rgb(var(--rgb-light) / 0.14);
+
+  /* ── Motion ────────────────────────────────────────────────────────────── */
+  --reveal-rise: 26px;
+  --reveal-dur: 700ms;
+  --reveal-dur-slow: 880ms;
+  --hover-dur: 260ms;
+  --t-fast: 180ms;
+  --t-mid:  300ms;
+  --t-slow: 560ms;
+  --focus-ring: var(--brand-primary);
+
+  /* ── Third-party marks — used only inside the Google review block ──────── */
+  --gg-blue:    #4285F4;
+  --gg-red:     #EA4335;
+  --gg-yellow:  #FBBC05;
+  --gg-green:   #34A853;
+  --star:       #F5A524;
+  --star-empty: rgb(var(--rgb-ink) / 0.16);
+
+  /* ── Icons ─────────────────────────────────────────────────────────────── */
+  --icon: 22px;
+  --icon-stroke: 1.6;
+
+  /* ── Chrome ────────────────────────────────────────────────────────────── */
+  --header-h: 104px;
+  --stickybar-h: 60px;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --header-h: 56px;
+    --gutter: 1.125rem;
+    --section-y: 3.25rem;
+  }
+}

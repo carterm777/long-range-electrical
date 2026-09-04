@@ -1,0 +1,155 @@
+/* ── Our Story — Split Story with Sticky Photo / Glass Timeline Markers ──── */
+
+.st { overflow: clip; }
+.st-orb {
+  position: absolute;
+  left: -14%;
+  bottom: -22%;
+  width: 42rem;
+  height: 42rem;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgb(var(--rgb-secondary) / 0.1), transparent 64%);
+}
+.st-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(2rem, 4vw, 4.5rem);
+  align-items: start;
+}
+
+/* ── Sticky photo stack ────────────────────────────────────────────────── */
+.st-aside { position: sticky; top: calc(var(--header-h) + var(--sp-7)); }
+.st-stack { position: relative; padding-bottom: 22%; }
+.st-photo { margin: 0; }
+.st-photo img { width: 100%; height: 100%; object-fit: cover; }
+.st-photo--back {
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  box-shadow: var(--e-4);
+}
+.st-photo--back img { object-position: center 42%; }
+.st-photo--front {
+  position: absolute;
+  right: -3%;
+  bottom: 2%;
+  width: 48%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 5px solid var(--surface-0);
+  box-shadow: var(--e-4);
+}
+.st-pull {
+  position: absolute;
+  left: -3%;
+  bottom: -4%;
+  width: 58%;
+  margin: 0;
+  padding: var(--sp-5);
+  border-radius: var(--r-md);
+  background: linear-gradient(160deg, var(--ink-800), var(--ink-700));
+  border: 1px solid rgb(var(--rgb-primary) / 0.28);
+  box-shadow: var(--e-4);
+  color: var(--text-on-dark);
+}
+.st-pull .lucide {
+  --icon: 20px;
+  color: var(--brand-primary);
+  margin-bottom: var(--sp-3);
+}
+.st-pull p {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  font-weight: var(--w-semi);
+  line-height: 1.45;
+  letter-spacing: var(--tr-snug);
+  color: var(--brand-light);
+}
+
+/* ── Story column ──────────────────────────────────────────────────────── */
+.st-head { margin-bottom: var(--sp-8); }
+.st-track { position: relative; padding-left: var(--sp-8); }
+.st-rail {
+  position: absolute;
+  left: 7px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  border-radius: var(--r-pill);
+  background: var(--line-light);
+  overflow: hidden;
+}
+.st-rail::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: calc(var(--scrub, 0) * 100%);
+  background: linear-gradient(180deg, var(--brand-primary), var(--brand-secondary));
+  box-shadow: 0 0 12px rgb(var(--rgb-primary) / 0.6);
+}
+
+.st-steps { display: grid; gap: var(--sp-8); }
+.st-step { position: relative; }
+.st-dot {
+  position: absolute;
+  left: calc(var(--sp-8) * -1 + 1px);
+  top: 0;
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--surface-0);
+  border: 3px solid var(--brand-primary);
+  box-shadow: 0 0 0 4px var(--surface-0), 0 0 0 6px rgb(var(--rgb-primary) / 0.16);
+}
+.st-marker {
+  font-size: var(--fs-micro);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-caps-wide);
+  text-transform: uppercase;
+  color: var(--brand-secondary);
+}
+.st-body {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-loose);
+  color: var(--text-body);
+  max-width: 46ch;
+}
+
+.st-aside-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-4);
+  margin-top: var(--sp-9);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--line-light);
+}
+.st-aside-cta p {
+  font-size: var(--fs-micro);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-caps);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+@media (max-width: 1024px) {
+  .st-inner { grid-template-columns: minmax(0, 1fr); }
+  .st-aside-cta { margin-top: var(--sp-7); }
+  .st-aside { position: static; }
+  .st-stack { max-width: 34rem; padding-bottom: 18%; }
+  .st-body { max-width: none; }
+}
+@media (max-width: 560px) {
+  .st-track { padding-left: var(--sp-6); }
+  .st-dot { left: calc(var(--sp-6) * -1); width: 13px; height: 13px; }
+  .st-rail { left: 5px; }
+  .st-steps { gap: var(--sp-7); }
+  .st-body { font-size: var(--fs-base); }
+  .st-pull { width: 74%; padding: var(--sp-4); }
+  .st-photo--front { width: 46%; }
+}

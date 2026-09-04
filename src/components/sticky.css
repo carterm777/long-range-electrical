@@ -1,0 +1,60 @@
+/* ── Mobile sticky call bar — Glass Panel Sticky Bar ─────────────────────── */
+
+.sbar { display: none; }
+
+@media (max-width: 900px) {
+  .sbar {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    padding: var(--sp-2) var(--gutter) calc(var(--sp-2) + env(safe-area-inset-bottom, 0px));
+    background: rgb(var(--rgb-ink) / 0.82);
+    -webkit-backdrop-filter: blur(var(--glass-blur-heavy)) saturate(160%);
+    backdrop-filter: blur(var(--glass-blur-heavy)) saturate(160%);
+    border-top: 1px solid rgb(var(--rgb-primary) / 0.3);
+    box-shadow: 0 -18px 44px -28px rgb(var(--rgb-ink) / 0.95);
+    transform: translateY(110%);
+    opacity: 0;
+    transition:
+      transform 420ms var(--ease-out-quart),
+      opacity var(--t-mid) var(--ease-out-cubic);
+  }
+  .sbar[data-show='true'] { transform: none; opacity: 1; }
+
+  .sbar-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-3);
+    padding: 0.6875rem var(--sp-4);
+    border-radius: var(--r-pill);
+    background: linear-gradient(140deg, var(--brand-primary), var(--brand-secondary) 118%);
+    color: var(--brand-light);
+    box-shadow:
+      0 1px 0 rgb(var(--rgb-light) / 0.35) inset,
+      0 12px 26px -14px rgb(var(--rgb-primary) / 0.9);
+  }
+  .sbar-icon { display: grid; place-items: center; }
+  .sbar-icon .lucide { --icon: 18px; }
+  .sbar-text { display: flex; flex-direction: column; line-height: 1.15; }
+  .sbar-label {
+    font-size: 0.5938rem;
+    font-weight: var(--w-semi);
+    letter-spacing: var(--tr-caps);
+    text-transform: uppercase;
+    opacity: 0.82;
+  }
+  .sbar-num {
+    font-family: var(--font-display);
+    font-size: var(--fs-sm);
+    font-weight: var(--w-bold);
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sbar { transition: none; }
+}
